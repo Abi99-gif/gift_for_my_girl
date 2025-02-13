@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love - Ashika</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            margin-top: 100px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        .hidden {
+            display: none;
+        }
+        .heart {
+            color: red;
+            font-size: 50px;
+            cursor: pointer;
+        }
+        .glow {
+            font-size: 24px;
+            color: red;
+            text-shadow: 0px 0px 10px red;
+        }
+        .heart-button {
+            background-color: red;
+            color: white;
+            font-size: 20px;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px red;
+            transition: 0.3s;
+        }
+        .heart-button:hover {
+            box-shadow: 0 0 20px red;
+            transform: scale(1.1);
+        }
+        .page1 { background: url('PAGE1.jpg') no-repeat center center fixed; background-size: cover; }
+        .page2 { background: url('PAGE2.8.jpg') no-repeat center center fixed; background-size: cover; }
+        .page3 { background: url('PAGE2.2.jpg') no-repeat center center fixed; background-size: cover; }
+        .page4 { background: url('PAGE2.3.jpg') no-repeat center center fixed; background-size: cover; }
+
+        .slideshow-container {
+            position: relative;
+            max-width: 500px;
+            margin: auto;
+            overflow: hidden;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .slide {
+            position: absolute;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            opacity: 0;
+            transition: all 1s ease-in-out;
+        }
+        .slide.active {
+            opacity: 1;
+        }
+        #message {
+            color: red;
+        }
+    </style>
+</head>
+<body class="page1">
+    <div class="container" id="page1">
+        <h1>My Love Letter to You, Ashika 💌</h1>
+        <h2><i>Every love story is special, but ours is my favorite</i></h2>
+        <pre>From just friends to something more... I never imagined that my little crush on you would turn into the most beautiful journey of my life. ❤</pre>
+        <audio id="bgMusic" loop>
+            <source src="WELLCOME_1.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+        <br><br>
+        <button class="heart-button" onclick="nextPage(1)">❤</button>
+    </div>
+    
+    <div class="container hidden page2" id="page2">
+        <h1>Our Love Story Timeline ❤</h1>
+        <p>Swipe through our beautiful memories</p>
+        <div class="slideshow-container">
+            <img class="slide active" src="PAGE2.1.jpg" alt="Memory 1">
+            <img class="slide" src="PAGE2.2.jpg" alt="Memory 2">
+            <img class="slide" src="PAGE2.3.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.4.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.5.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.6.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.7.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.8.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.9.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.10.jpg" alt="Memory 3">
+            <img class="slide" src="PAGE2.11.jpg" alt="Memory 3">
+        </div>
+        <br><br>
+        <button class="heart-button" onclick="nextPage(2)">❤</button>
+    </div>
+    
+    <div class="container hidden page3" id="page3">
+        <h1>Click the Heart ❤️</h1>
+        <span class="heart" onclick="showMessage()">💖</span>
+        <p id="message" class="hidden">Sorry for all misunderstanding Ashika. Sorry. Kuta Maa, neega yaa life la kadacha oru important person. Unna ya manasaltha puduchichi, neeyatha chinna pona irruthaalum, yaanaku advice pannurathula romba pariyaa poonu, unnala yaatha fight tu vathu illa, naa tha konjam understandable la illa illa. Sorry for that kutachii. Inni apdi irruka maata. I sure that I will be for you for any time when you need. 💕</p>
+        <br>
+        <button id="nextPage3" class="heart-button hidden" onclick="nextPage(3)">❤</button>
+    </div>
+    
+    <div class="container hidden page4" id="page4">
+        <h1>A Special Moment 💖</h1>
+        <div id="icons">
+            <p id="male">👨‍💼 Abilash</p>
+            <p id="female" class="hidden">👩‍💼 Ashika</p>
+        </div>
+        <button class="heart-button" onclick="acceptLove()">Accept Request</button>
+        <p id="loveText" class="hidden glow">I love you, Ashika! 💖</p>
+        <button id="happyButton" class="hidden" onclick="sendConfirmation()">Happy</button>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(error => {
+                console.log('Autoplay was prevented. Please interact with the page to play the audio.');
+            });
+        });
+
+        function nextPage(page) {
+            document.getElementById("page" + page).classList.add("hidden");
+            document.getElementById("page" + (page + 1)).classList.remove("hidden");
+            document.body.className = "page" + (page + 1);
+            if (page + 1 === 2) {
+                startSlideshow();
+            }
+        }
+        
+        function startSlideshow() {
+            const slides = document.querySelectorAll("#page2 .slide");
+            let slideIndex = 0;
+            setInterval(() => {
+                slides.forEach(slide => slide.classList.remove("active"));
+                slides[slideIndex].classList.add("active");
+                slideIndex = (slideIndex + 1) % slides.length;
+            }, 3000);
+        }
+        
+        function showMessage() {
+            document.getElementById("message").classList.remove("hidden");
+            document.getElementById("nextPage3").classList.remove("hidden");
+        }
+        
+        function acceptLove() {
+            document.getElementById("female").classList.remove("hidden");
+            document.getElementById("loveText").classList.remove("hidden");
+            document.getElementById("happyButton").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
